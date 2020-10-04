@@ -22,7 +22,7 @@ public:
 	~Scene(){
         window.close();
     };
-
+    //test//
 	void start(){
         is_game_over = false;
         generate_field();
