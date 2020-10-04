@@ -9,7 +9,7 @@
 #include "Entity.h"
 #include "Alive.h"
 #include "Stone.h"
-
+#include "Dog.h"
 
 
 
@@ -24,6 +24,7 @@ public:
 	~Scene();
 	void start();
 private:
+	void move_objects();
 	void draw();
 	void draw_field();
 	void check_event();

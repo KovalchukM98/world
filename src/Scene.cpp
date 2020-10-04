@@ -37,6 +37,8 @@ void Scene::start() {
 				window.close();
 		}
 
+		move_objects();
+
 		window.clear();
 
 	    draw();
@@ -46,7 +48,15 @@ void Scene::start() {
 }
 
 
-
+void Scene::move_objects() {
+	for (int i = 0; i < WINDOW_SIZE_X / size_x; ++i) {
+		for (int j = 0; j < WINDOW_SIZE_Y / size_y; ++j) {
+			if (field[i][j] != NULL) {
+				field[i][j]->move(WINDOW_SIZE_X / size_x, WINDOW_SIZE_Y / size_y);
+			}
+		}
+	}
+}
 
 
 	void Scene::draw() {
@@ -112,19 +122,14 @@ void Scene::start() {
 	};
 
 	void Scene::generate_field() {
-		// bricks_num = 0;
-		// for(int i = 0 ; i < 600/60 ; i++){
-		//     for(int j = 0 ; j < 600/40 ; j++)
-		//         if(rand() % 2 == 1){
-		//             bricks_num++;
-		//             field[i][j] = true;
-		//         }
-		//         else
-		//             field[i][j] = false;
-		// }
+
 		for (int i = 0; i < WINDOW_SIZE_X / size_x; ++i) {
 			for (int j = 0; j < WINDOW_SIZE_Y / size_y; ++j) {
-				if (rand() % 2 == 1) {
+				if (rand() % 10 == 2) {
+					field[i][j] = new Dog(i, j);
+				}
+				else
+				if (rand() % 10 == 1) {
 					field[i][j] = new Stone(i,j);
 				}
 				else

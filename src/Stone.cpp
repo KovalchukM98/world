@@ -5,7 +5,7 @@ Stone::Stone(int my_x, int my_y) {
 	y = my_y;
 }
 
-void Stone::move() {};
+ Stone::move() {};
 
 void Stone::draw(sf::RenderWindow* window, int size) {
 

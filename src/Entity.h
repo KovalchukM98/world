@@ -7,7 +7,7 @@
 #include "Object.h"
 class Entity : public Object {
 public:
-	void move() {};
+	std::pair<int, int>move() override {  };
 
 protected:
 
