@@ -1,13 +1,14 @@
+#pragma once
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <stdio.h>
 #include <stdlib.h>
-
-class Entity: public Object{
+#include "Object.h"
+class Alive : public Object {
 public:
-	void move(){}
+	void move() {};
 
 protected:
 
-}
+};
