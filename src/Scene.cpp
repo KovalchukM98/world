@@ -45,6 +45,9 @@ public:
                 //....
             }
             //.....
+            window.clear();
+            draw();
+            window.display();
     	}
 
         
