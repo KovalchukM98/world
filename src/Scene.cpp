@@ -6,11 +6,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int WINDOW_SIZE_X = 1000;
-int WINDOW_SIZE_Y = 1000;
+const int WINDOW_SIZE_X = 1000;
+const int WINDOW_SIZE_Y = 1000;
 
 class Scene{
 public:
+
 	Scene(){
         is_game_over = true;
         window.create(sf::VideoMode(WINDOW_SIZE_X, WINDOW_SIZE_Y), "My world");
@@ -67,7 +68,7 @@ private:
                 }
             }
         }
-    }
+    };
 
     void check_event(){
         sf::Event event;
@@ -83,7 +84,7 @@ private:
                 break;
             }
         }
-    }
+    };
 
     void check_key(sf::Event event){
         switch(event.key.code){
@@ -92,18 +93,18 @@ private:
             is_game_over = true;
             break;
 
-            case sf::Keyboard::Left:
-            board->update(0);
-            break;
+        //     case sf::Keyboard::Left:
+        //     board->update(0);
+        //     break;
 
-            case sf::Keyboard::Right:
-            board->update(1);
-            break;
+        //     case sf::Keyboard::Right:
+        //     board->update(1);
+        //     break;
 
-            default:
-            break;
+        //     default:
+        //     break;
         }
-    }
+    };
 
     void generate_field(){
         // bricks_num = 0;
@@ -116,11 +117,11 @@ private:
         //         else
         //             field[i][j] = false;
         // }
-    }
+    };
 
 	sf::RenderWindow window;
 
-    bool field[WINDOW_SIZE_X/50]WINDOW_SIZE_Y/50];
+    bool field[WINDOW_SIZE_X/50][WINDOW_SIZE_Y/50];
     bool is_game_over;
     sf::Clock clock;
     float timer;
