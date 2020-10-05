@@ -5,7 +5,9 @@ Stone::Stone(int my_x, int my_y) {
 	y = my_y;
 }
 
- Stone::move() {};
+std::pair<int, int> Stone::move(int max_x, int max_y){
+
+};
 
 void Stone::draw(sf::RenderWindow* window, int size) {
 

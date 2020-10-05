@@ -8,8 +8,8 @@
 #include "Object.h"
 #include "Entity.h"
 #include "Alive.h"
-#include "Stone.h"
-#include "Dog.h"
+#include "Stone.cpp"
+#include "Dog.cpp"
 
 
 
