@@ -3,6 +3,7 @@
 Stone::Stone(int my_x, int my_y) {
 	x = my_x;
 	y = my_y;
+	is_Alive = false;
 }
 
 std::pair<int, int> Stone::move(int max_x, int max_y){

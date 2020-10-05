@@ -7,10 +7,19 @@ Scene::Scene() {
 	window.create(sf::VideoMode(WINDOW_SIZE_X, WINDOW_SIZE_Y), "My world");
 	window.setVerticalSyncEnabled(true);
 	window.setFramerateLimit(80);
+
+	max_x = WINDOW_SIZE_X / size_x;
+	max_y = WINDOW_SIZE_Y / size_y;
+
+	field = new Object**[max_x];
+	for(int i = 0; i < max_x; ++i){
+		field[i] = new Object*[max_y];
+	}
 };
 
 Scene::~Scene() {
 	window.close();
+	clear(field, max_x, max_y);
 };
 
 void Scene::start() {
@@ -49,10 +58,12 @@ void Scene::start() {
 
 
 void Scene::move_objects() {
-	for (int i = 0; i < WINDOW_SIZE_X / size_x; ++i) {
-		for (int j = 0; j < WINDOW_SIZE_Y / size_y; ++j) {
+	for (int i = 0; i < max_x; ++i) {
+		for (int j = 0; j < max_y; ++j) {
 			if (field[i][j] != NULL) {
-				field[i][j]->move(WINDOW_SIZE_X / size_x, WINDOW_SIZE_Y / size_y);
+				if(field[i][j]-> is_Alive)
+					// Object*** arr = get_vision(field[i][j]->get_range, i, j);
+					field[i][j]->move(max_x, max_y);
 			}
 		}
 	}
@@ -60,8 +71,8 @@ void Scene::move_objects() {
 
 
 	void Scene::draw() {
-		for (int i = 0; i < WINDOW_SIZE_X / size_x; ++i) {
-			for (int j = 0; j < WINDOW_SIZE_Y / size_y; ++j) {
+		for (int i = 0; i < max_x; ++i) {
+			for (int j = 0; j < max_x; ++j) {
 				if (field[i][j] != NULL) {
 					field[i][j]->draw(&window, size_x);
 				}
@@ -70,8 +81,8 @@ void Scene::move_objects() {
 	}
 
 	void Scene::draw_field() {
-		for (int i = 0; i < WINDOW_SIZE_X / 50; i++) {
-			for (int j = 0; j < WINDOW_SIZE_Y / 50; j++) {
+		for (int i = 0; i < max_x; i++) {
+			for (int j = 0; j < max_y; j++) {
 				if (field[i][j] != NULL) {
 					// sf::RectangleShape rectangle;
 					// rectangle.setPosition(i*60+15, j*40+15);
@@ -123,8 +134,8 @@ void Scene::move_objects() {
 
 	void Scene::generate_field() {
 
-		for (int i = 0; i < WINDOW_SIZE_X / size_x; ++i) {
-			for (int j = 0; j < WINDOW_SIZE_Y / size_y; ++j) {
+		for (int i = 0; i < max_x; ++i) {
+			for (int j = 0; j < max_y; ++j) {
 				if (rand() % 10 == 2) {
 					field[i][j] = new Dog(i, j);
 				}
@@ -140,5 +151,13 @@ void Scene::move_objects() {
 		}
 	};
 
-
+	void Scene::clear(Object*** arr, int x, int y){
+		for (int i = 0; i < x; ++i) {
+			for (int j = 0; j < y; ++j) {
+				delete arr[i][j];
+			}
+			delete [] arr[i];
+		}
+		delete [] arr;
+	}
 

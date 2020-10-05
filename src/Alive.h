@@ -8,7 +8,10 @@
 class Alive : public Object {
 public:
 
+	Alive(){
+		is_Alive = true;
+	}
 
 protected:
-
+	int range;
 };

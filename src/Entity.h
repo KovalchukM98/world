@@ -8,6 +8,11 @@
 
 class Entity : public Object {
 public:
+
+	Entity(){
+		is_Alive = false;
+	}
+
 	// std::pair<int, int> move(int max_x, int max_y) override;
 
 protected:

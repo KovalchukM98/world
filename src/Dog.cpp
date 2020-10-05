@@ -3,10 +3,16 @@
 Dog::Dog(int my_x, int my_y) {
 	x = my_x;
 	y = my_y;
+	is_Alive = true;
+	range = 1;
 }
+
+int Dog::get_range(){
+	return range;
+}
+
 std::pair<int,int>Dog::move(int max_x, int max_y){
 	
-
 }
 void Dog::draw(sf::RenderWindow* window, int size){
 
