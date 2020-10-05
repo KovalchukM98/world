@@ -10,6 +10,7 @@ class Entity : public Object {
 public:
 
 	Entity(){
+		range = 0;
 		is_Alive = false;
 	}
 

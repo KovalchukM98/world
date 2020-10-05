@@ -18,6 +18,7 @@ public:
 	bool is_Alive;
 
 protected:
+	int range;
 	int power;
 	int x;
 	int y;

@@ -13,5 +13,5 @@ public:
 	}
 
 protected:
-	int range;
+	
 };

@@ -73,6 +73,11 @@ void Scene::move_objects() {
 	void Scene::draw() {
 		for (int i = 0; i < max_x; ++i) {
 			for (int j = 0; j < max_x; ++j) {
+				sf::RectangleShape rectangle;
+                    rectangle.setPosition(i*size_x, j*size_y);
+                    rectangle.setSize(sf::Vector2f(size_x, size_y));
+                    rectangle.setFillColor(sf::Color(0,70,0));
+                    window.draw(rectangle);
 				if (field[i][j] != NULL) {
 					field[i][j]->draw(&window, size_x);
 				}
@@ -80,21 +85,21 @@ void Scene::move_objects() {
 		}
 	}
 
-	void Scene::draw_field() {
-		for (int i = 0; i < max_x; i++) {
-			for (int j = 0; j < max_y; j++) {
-				if (field[i][j] != NULL) {
-					// sf::RectangleShape rectangle;
-					// rectangle.setPosition(i*60+15, j*40+15);
-					// rectangle.setSize(sf::Vector2f(30, 10));
-					// rectangle.setFillColor(sf::Color(250,0,0));
-					// rectangle.setOutlineThickness(15.f);
-					// rectangle.setOutlineColor(sf::Color(80,220,50));
-					// window.draw(rectangle);
-				}
-			}
-		}
-	};
+	// void Scene::draw_field() {
+	// 	for (int i = 0; i < max_x; i++) {
+	// 		for (int j = 0; j < max_y; j++) {
+	// 			if (field[i][j] != NULL) {
+	// 				// sf::RectangleShape rectangle;
+	// 				// rectangle.setPosition(i*60+15, j*40+15);
+	// 				// rectangle.setSize(sf::Vector2f(30, 10));
+	// 				// rectangle.setFillColor(sf::Color(250,0,0));
+	// 				// rectangle.setOutlineThickness(15.f);
+	// 				// rectangle.setOutlineColor(sf::Color(80,220,50));
+	// 				// window.draw(rectangle);
+	// 			}
+	// 		}
+	// 	}
+	// };
 
 	void Scene::check_event() {
 		sf::Event event;
@@ -137,11 +142,11 @@ void Scene::move_objects() {
 		for (int i = 0; i < max_x; ++i) {
 			for (int j = 0; j < max_y; ++j) {
 				if (rand() % 10 == 2) {
-					field[i][j] = new Dog(i, j);
+					field[i][j] = new Stone(i, j);
 				}
 				else
 				if (rand() % 10 == 1) {
-					field[i][j] = new Stone(i,j);
+					field[i][j] = new Dog(i,j);
 				}
 				else
 				{

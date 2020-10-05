@@ -26,7 +26,7 @@ public:
 private:
 	void move_objects();
 	void draw();
-	void draw_field();
+	// void draw_field();
 	void check_event();
 	void check_key(sf::Event event);
 	void generate_field();

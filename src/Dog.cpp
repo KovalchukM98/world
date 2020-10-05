@@ -1,9 +1,8 @@
 #include "Dog.h"
 
-Dog::Dog(int my_x, int my_y) {
+Dog::Dog(int my_x, int my_y) : Alive() {
 	x = my_x;
 	y = my_y;
-	is_Alive = true;
 	range = 1;
 }
 
