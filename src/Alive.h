@@ -12,6 +12,10 @@ public:
 		is_Alive = true;
 	}
 
+	void give_turn(){
+		turn = true;
+	}
+
 protected:
 	
 };

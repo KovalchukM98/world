@@ -5,7 +5,7 @@ Stone::Stone(int my_x, int my_y) : Entity() {
 	y = my_y;
 }
 
-std::pair<int, int> Stone::move(int max_x, int max_y){
+std::pair<int, int> Stone::move(Object*** map,int max_x, int max_y){
 
 };
 
