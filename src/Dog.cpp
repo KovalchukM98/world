@@ -15,7 +15,6 @@ int Dog::get_range(){
 }
 
 std::pair<int,int> Dog::move(Object*** map , int max_x, int max_y){
-	std::cout << "range = " << range << std::endl;
 	std::pair<int,int> coords;
 	coords.first = x;
 	coords.second = y;
@@ -34,7 +33,6 @@ std::pair<int,int> Dog::move(Object*** map , int max_x, int max_y){
 			if(map[new_x][y] == NULL && horizontal == true){
 				coords.first = new_x;
 				x = new_x;
-				std::cout << "step" << std::endl;
 				turn = false;
 				return coords;
 			} else{
@@ -51,7 +49,6 @@ std::pair<int,int> Dog::move(Object*** map , int max_x, int max_y){
 			if(map[x][new_y] == NULL && horizontal == false){
 				coords.second = new_y;
 				y = new_y;
-				std::cout << "step: " << std::endl;
 				turn = false;
 				return coords;
 			} else{

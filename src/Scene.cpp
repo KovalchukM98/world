@@ -33,19 +33,11 @@ void Scene::start() {
 	// }
 	// music.play();
 
-	float time;
-	float delay = 0.5;
+	float timer = 0;
+	float time = 0;
+	float delay = 100000;
 	while (window.isOpen())
 	{
-
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed ||
-				(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape))
-				window.close();
-		}
-
 		move_objects();
 
 		window.clear();
@@ -53,7 +45,19 @@ void Scene::start() {
 	    draw();
 
 		window.display();
-		getchar();
+		while(timer <= delay){
+        	time = clock.getElapsedTime().asSeconds();
+        	timer += time;
+
+        	sf::Event event;
+			while (window.pollEvent(event))
+			{
+				if (event.type == sf::Event::Closed ||
+					(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape))
+					window.close();
+				}
+        }
+        timer = 0;
 	}
 }
 
@@ -63,10 +67,10 @@ void Scene::move_objects() {
 		for (int j = 0; j < max_y; ++j) {
 			if (field[i][j] != NULL) {
 				if(field[i][j]-> is_Alive){
-					std::cout << "MOVE!" << std::endl;
+					// std::cout << "MOVE!" << std::endl;
 					// Object*** arr = get_vision(field[i][j]->get_range, i, j);
 					std::pair<int, int>coords = field[i][j]->move(field, max_x, max_y);
-					std::cout <<"go to: " <<coords.first << " " << coords.second << std::endl;
+					// std::cout <<"go to: " <<coords.first << " " << coords.second << std::endl;
 					Object* tmp = field[i][j];
 					field[i][j] = field[coords.first][coords.second];
 					field[coords.first][coords.second] = tmp;
@@ -161,16 +165,16 @@ void Scene::move_objects() {
 				if (rand() % 10 == 2) {
 					field[i][j] = new Stone(i, j);
 				}
-				// else
-				// if (rand() % 10 == 1) {
-				// 	field[i][j] = new Dog(i,j);
-				// }
+				else
+				if (rand() % 10 == 1) {
+					field[i][j] = new Dog(i,j);
+				}
 				else
 				{
-					if(dog == false){
-						dog = true;
-						field[i][j] = new Dog(i,j);
-					} else
+					// if(dog == false){
+					// 	dog = true;
+					// 	field[i][j] = new Dog(i,j);
+					// } else
 					field[i][j] = NULL;
 				}
 			}
