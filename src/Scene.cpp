@@ -53,6 +53,7 @@ void Scene::start() {
 	    draw();
 
 		window.display();
+		getchar();
 	}
 }
 
@@ -61,9 +62,25 @@ void Scene::move_objects() {
 	for (int i = 0; i < max_x; ++i) {
 		for (int j = 0; j < max_y; ++j) {
 			if (field[i][j] != NULL) {
-				if(field[i][j]-> is_Alive)
+				if(field[i][j]-> is_Alive){
+					std::cout << "MOVE!" << std::endl;
 					// Object*** arr = get_vision(field[i][j]->get_range, i, j);
-					field[i][j]->move(max_x, max_y);
+					std::pair<int, int>coords = field[i][j]->move(field, max_x, max_y);
+					std::cout <<"go to: " <<coords.first << " " << coords.second << std::endl;
+					Object* tmp = field[i][j];
+					field[i][j] = field[coords.first][coords.second];
+					field[coords.first][coords.second] = tmp;
+				}
+			}
+		}
+	}
+
+	for (int i = 0; i < max_x; ++i) {
+		for (int j = 0; j < max_y; ++j) {
+			if (field[i][j] != NULL) {
+				if(field[i][j]-> is_Alive){
+					field[i][j]->give_turn();
+				}
 			}
 		}
 	}
@@ -138,18 +155,22 @@ void Scene::move_objects() {
 	};
 
 	void Scene::generate_field() {
-
+		bool dog = false;
 		for (int i = 0; i < max_x; ++i) {
 			for (int j = 0; j < max_y; ++j) {
 				if (rand() % 10 == 2) {
 					field[i][j] = new Stone(i, j);
 				}
-				else
-				if (rand() % 10 == 1) {
-					field[i][j] = new Dog(i,j);
-				}
+				// else
+				// if (rand() % 10 == 1) {
+				// 	field[i][j] = new Dog(i,j);
+				// }
 				else
 				{
+					if(dog == false){
+						dog = true;
+						field[i][j] = new Dog(i,j);
+					} else
 					field[i][j] = NULL;
 				}
 			}
