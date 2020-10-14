@@ -34,8 +34,7 @@ void Scene::start() {
 	// music.play();
 
 	float timer = 0;
-	float time = 0;
-	float delay = 100000;
+	float delay = 1.0f;
 	while (window.isOpen())
 	{
 		move_objects();
@@ -45,10 +44,8 @@ void Scene::start() {
 	    draw();
 
 		window.display();
-		while(timer <= delay){
-        	time = clock.getElapsedTime().asSeconds();
-        	timer += time;
-
+		while(timer < delay){
+        	timer = clock.getElapsedTime().asSeconds();
         	sf::Event event;
 			while (window.pollEvent(event))
 			{
@@ -57,6 +54,7 @@ void Scene::start() {
 					window.close();
 				}
         }
+        clock.restart();
         timer = 0;
 	}
 }
