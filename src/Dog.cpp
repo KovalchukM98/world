@@ -1,13 +1,23 @@
 #include "Dog.h"
+#include <utility>
 
 Dog::Dog(int my_x, int my_y) : Alive() {
 	x = my_x;
 	y = my_y;
 	range = 1;
-	direction.first = 1;
-	direction.second = 1;
+	if(rand()%2 == 0){
+		direction.first = 1;
+		horizontal = true;
+	} else{
+		direction.first = -1;
+		horizontal = false;
+	}
+	if(rand()%2 == 0){
+		direction.second = 1;
+	} else{
+		direction.second = -1;
+	}
 	turn = true;
-	horizontal = true;
 }
 
 int Dog::get_range(){
