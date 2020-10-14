@@ -161,7 +161,11 @@ void Scene::move_objects() {
 		for (int i = 0; i < max_x; ++i) {
 			for (int j = 0; j < max_y; ++j) {
 				if (rand() % 10 == 2) {
-					field[i][j] = new Stone(i, j);
+					if(rand() % 3 == 1){
+						field[i][j] = new Lake(i, j);
+					} else{
+						field[i][j] = new Stone(i, j);
+					}
 				}
 				else
 				if (rand() % 10 == 1) {

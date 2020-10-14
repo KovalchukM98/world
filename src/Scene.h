@@ -10,6 +10,7 @@
 #include "Alive.h"
 #include "Stone.cpp"
 #include "Dog.cpp"
+#include "Lake.cpp"
 
 
 

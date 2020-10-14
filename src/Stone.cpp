@@ -10,7 +10,6 @@ std::pair<int, int> Stone::move(Object*** map,int max_x, int max_y){
 };
 
 void Stone::draw(sf::RenderWindow* window, int size) {
-
 	int start_x = size * x;
 	int start_y = size * y;
 	sf::CircleShape shape;
