@@ -59,19 +59,27 @@ void Scene::start() {
 	}
 }
 
+void Scene::make_fight(Object** agressor, Object** defender){
+
+	delete *defender;
+	*defender = *agressor;
+	*agressor = NULL;
+}
 
 void Scene::move_objects() {
 	for (int i = 0; i < max_x; ++i) {
 		for (int j = 0; j < max_y; ++j) {
 			if (field[i][j] != NULL) {
 				if(field[i][j]-> is_Alive){
-					// std::cout << "MOVE!" << std::endl;
-					// Object*** arr = get_vision(field[i][j]->get_range, i, j);
 					std::pair<int, int>coords = field[i][j]->move(field, max_x, max_y);
-					// std::cout <<"go to: " <<coords.first << " " << coords.second << std::endl;
-					Object* tmp = field[i][j];
-					field[i][j] = field[coords.first][coords.second];
-					field[coords.first][coords.second] = tmp;
+					
+					if(field[coords.first][coords.second] != NULL && !(coords.first == i && coords.second == j) ){
+						make_fight(&field[i][j] ,&field[coords.first][coords.second]);
+					} else{
+						Object* tmp = field[i][j];
+						field[i][j] = field[coords.first][coords.second];
+						field[coords.first][coords.second] = tmp;
+					}
 				}
 			}
 		}
@@ -104,22 +112,6 @@ void Scene::move_objects() {
 		}
 	}
 
-	// void Scene::draw_field() {
-	// 	for (int i = 0; i < max_x; i++) {
-	// 		for (int j = 0; j < max_y; j++) {
-	// 			if (field[i][j] != NULL) {
-	// 				// sf::RectangleShape rectangle;
-	// 				// rectangle.setPosition(i*60+15, j*40+15);
-	// 				// rectangle.setSize(sf::Vector2f(30, 10));
-	// 				// rectangle.setFillColor(sf::Color(250,0,0));
-	// 				// rectangle.setOutlineThickness(15.f);
-	// 				// rectangle.setOutlineColor(sf::Color(80,220,50));
-	// 				// window.draw(rectangle);
-	// 			}
-	// 		}
-	// 	}
-	// };
-
 	void Scene::check_event() {
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -142,22 +134,11 @@ void Scene::move_objects() {
 			window.close();
 			is_game_over = true;
 			break;
-
-			//     case sf::Keyboard::Left:
-			//     board->update(0);
-			//     break;
-
-			//     case sf::Keyboard::Right:
-			//     board->update(1);
-			//     break;
-
-			//     default:
-			//     break;
 		}
 	};
 
 	void Scene::generate_field() {
-		bool dog = false;
+		bool wolf = false;
 		for (int i = 0; i < max_x; ++i) {
 			for (int j = 0; j < max_y; ++j) {
 				if (rand() % 10 == 2) {
@@ -173,10 +154,10 @@ void Scene::move_objects() {
 				}
 				else
 				{
-					// if(dog == false){
-					// 	dog = true;
-					// 	field[i][j] = new Dog(i,j);
-					// } else
+					if(wolf == false){
+						wolf = true;
+						field[i][j] = new Wolf(i,j);
+					} else
 					field[i][j] = NULL;
 				}
 			}

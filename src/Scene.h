@@ -11,7 +11,7 @@
 #include "Stone.cpp"
 #include "Dog.cpp"
 #include "Lake.cpp"
-
+#include "Wolf.cpp"
 
 
 const int WINDOW_SIZE_X = 1000;
@@ -27,7 +27,7 @@ public:
 private:
 	void move_objects();
 	void draw();
-	// void draw_field();
+	void make_fight(Object** agressor, Object** defender);
 	void check_event();
 	void check_key(sf::Event event);
 	void generate_field();

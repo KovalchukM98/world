@@ -1,7 +1,7 @@
-#include "Dog.h"
+#include "Wolf.h"
 #include <utility>
 
-Dog::Dog(int my_x, int my_y) : Alive() {
+Wolf::Wolf(int my_x, int my_y) : Alive() {
 	x = my_x;
 	y = my_y;
 	range = 1;
@@ -20,17 +20,66 @@ Dog::Dog(int my_x, int my_y) : Alive() {
 	turn = true;
 }
 
-int Dog::get_range(){
+int Wolf::get_range(){
 	return range;
 }
 
-std::pair<int,int> Dog::move(Object*** map , int max_x, int max_y){
+std::pair<int,int> Wolf::try_to_hunt(Object*** map , int max_x, int max_y){
+	std::pair<int,int> coords;
+	coords.first = x;
+	coords.second = y;
+	hunt = false;
+
+	for(int i = -1; i < 2; ++i){
+		if( x+i < 0 || x+i >= max_x || x+i == x){
+			continue;
+		}
+		if(map[x+i][y] != NULL){
+			if(map[x+i][y]->is_Alive){
+				hunt = true;
+				coords.first = x+i;
+				coords.second = y;
+			}
+		}
+	}
+
+	for(int i = -1; i < 2; ++i){
+		if( y+i < 0 || y+i >= max_y || y+i == y){
+			continue;
+		}
+		if(map[x][y+i] != NULL){
+			if(map[x][y+i]->is_Alive){	
+				hunt = true;
+				coords.first = x;
+				coords.second = y+i;
+			}
+		}
+	}
+	// if(hunt){
+		// std::cout << "gonna kill " << coords.first << " " << coords.second << std::endl;
+	// }
+	return coords;
+}
+
+std::pair<int,int> Wolf::move(Object*** map , int max_x, int max_y){
 	std::pair<int,int> coords;
 	coords.first = x;
 	coords.second = y;
 	if(turn == false){
 		return coords;
 	}
+
+	// std::cout << "try_to_hunt " << std::endl;
+	coords = try_to_hunt(map, max_x, max_y);
+	if(hunt){
+		turn = false;
+		hunt = false;
+		x = coords.first;
+		y = coords.second;
+		// std::cout<<"--------------------"<<std::endl;
+		return coords;
+	}
+	// std::cout << "hunt failed " << std::endl;
 
 	int new_x;
 	int new_y;
@@ -76,13 +125,13 @@ std::pair<int,int> Dog::move(Object*** map , int max_x, int max_y){
 	return coords;
 }
 
-void Dog::draw(sf::RenderWindow* window, int size){
+void Wolf::draw(sf::RenderWindow* window, int size){
 
 	int start_x = size * x;
 	int start_y = size * y;
 	sf::CircleShape shape;
-	shape.setFillColor(sf::Color::Red);
-	shape.setRadius(size / 4);
+	shape.setFillColor(sf::Color::Black);
+	shape.setRadius(size / 3);
 	shape.setPosition(start_x+size/4, start_y+size/4);
 	window->draw(shape);
 }
