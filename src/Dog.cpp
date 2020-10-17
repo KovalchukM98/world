@@ -80,9 +80,10 @@ void Dog::draw(sf::RenderWindow* window, int size){
 
 	int start_x = size * x;
 	int start_y = size * y;
-	sf::CircleShape shape;
-	shape.setFillColor(sf::Color::Red);
-	shape.setRadius(size / 4);
-	shape.setPosition(start_x+size/4, start_y+size/4);
-	window->draw(shape);
+	sf::Texture dog;
+	dog.loadFromFile("dog.png");
+	sf::Sprite dogsp;
+	dogsp.setTexture(dog);
+	dogsp.setPosition(start_x + size / 4, start_y + size / 4);
+	window->draw(dogsp);
 }

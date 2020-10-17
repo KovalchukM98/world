@@ -5,15 +5,19 @@ Lake::Lake(int my_x, int my_y) : Entity() {
 	y = my_y;
 }
 
-std::pair<int, int> Lake::move(Object*** map,int max_x, int max_y){};
+std::pair<int, int> Lake::move(Object*** map,int max_x, int max_y){
+	int a = 0, b = 0;
+	return std::pair<int, int>(a, b);
+};
 
 void Lake::draw(sf::RenderWindow* window, int size) {
 	int start_x = size * x;
 	int start_y = size * y;
-	sf::RectangleShape shape;
-    shape.setPosition(start_x+2, start_y+2);
-    shape.setSize(sf::Vector2f(size-5, size-5));
-	shape.setFillColor(sf::Color(0,0,180));
-	window->draw(shape);
-	
+
+	sf::Texture lake;
+	lake.loadFromFile("lake.png");
+	sf::Sprite lakesp;
+	lakesp.setTexture(lake);
+	lakesp.setPosition(start_x + 2, start_y + 2);
+	window->draw(lakesp);
 };

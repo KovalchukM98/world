@@ -129,9 +129,10 @@ void Wolf::draw(sf::RenderWindow* window, int size){
 
 	int start_x = size * x;
 	int start_y = size * y;
-	sf::CircleShape shape;
-	shape.setFillColor(sf::Color::Black);
-	shape.setRadius(size / 3);
-	shape.setPosition(start_x+size/4, start_y+size/4);
-	window->draw(shape);
+	sf::Texture wolf;
+	wolf.loadFromFile("wolf.png");
+	sf::Sprite wolfsp;
+	wolfsp.setTexture(wolf);
+	wolfsp.setPosition(start_x+size/4, start_y+size/4);
+	window->draw(wolfsp);
 }
