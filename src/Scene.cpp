@@ -139,8 +139,12 @@ void Scene::move_objects() {
 		for (int j = 0; j < max_y; ++j) {
 			if (field[i][j] != NULL) {
 				if (field[i][j]->is_Alive) {
+					Object ***vision = get_vision(field[i][j]->get_range(), i ,j);
 					std::pair<int, int>coords = field[i][j]->move(field, max_x, max_y);
-
+					for(int i = 0; i < (field[i][j]->get_range())*2+1; ++i) {
+						delete [] vision[i];
+					}
+					delete [] vision;
 					if (field[coords.first][coords.second] != NULL && !(coords.first == i && coords.second == j)) {
 						make_fight(&field[i][j], &field[coords.first][coords.second]);
 					}
@@ -245,4 +249,3 @@ void Scene::clear(Object*** arr, int x, int y) {
 	}
 	delete[] arr;
 }
-
