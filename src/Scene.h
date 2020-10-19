@@ -12,7 +12,7 @@
 #include "Sheep.h"
 #include "Lake.h"
 #include "Wolf.h"
-
+#include "Food.h"
 
 const int WINDOW_SIZE_X = 1000;
 const int WINDOW_SIZE_Y = 1000;
@@ -33,7 +33,7 @@ private:
 	void generate_field();
 	Object*** get_vision(int range, int x, int y);
 	void clear(Object*** arr, int x, int y);
-
+	int sheep_count;
 	int max_x;
 	int max_y;
 

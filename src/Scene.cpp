@@ -213,6 +213,7 @@ void Scene::check_key(sf::Event event) {
 
 void Scene::generate_field() {
 	bool wolf = false;
+	sheep_count = 0;
 	for (int i = 0; i < max_x; ++i) {
 		for (int j = 0; j < max_y; ++j) {
 			if (rand() % 10 == 2) {
@@ -225,7 +226,7 @@ void Scene::generate_field() {
 			}
 			else
 				if (rand() % 10 == 1) {
-					field[i][j] = new Sheep(i, j);
+					field[i][j] = new Sheep(i, j); sheep_count++;
 				}
 				else
 				{
@@ -236,6 +237,13 @@ void Scene::generate_field() {
 					else
 						field[i][j] = NULL;
 				}
+		}
+	}
+	for (int i = 0; i < max_x; ++i) {
+		for (int j = 0; j < max_y; ++j) {
+			if (rand() % sheep_count == 1) {
+				field[i][j] = new Food(i, j);
+			}
 		}
 	}
 };
