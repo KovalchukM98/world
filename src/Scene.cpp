@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-
+using namespace std;
 
 Scene::Scene() {
 	is_game_over = true;
@@ -83,7 +83,7 @@ Object*** Scene::get_vision(int range, int x, int y) {
 			}
 		}
 	}
-	/*for (int i1 = 0; i1 < vis_size; ++i1) { проверка как записались адреса
+	/*for (int i1 = 0; i1 < vis_size; ++i1) { ???? ??????? ???
 		for (int j1 = 0; j1 < vis_size; ++j1) {
 			std::cout << vision[i1][j1] << std::endl;
 			std::cout << i1 << "\t" << j1 << std::endl;
@@ -116,7 +116,7 @@ Object*** Scene::get_vision(int range, int x, int y) {
 		--temp_left;
 	}
 
-	/*for (int i1 = 0; i1 < vis_size; ++i1) { проверка зануления
+	/*for (int i1 = 0; i1 < vis_size; ++i1) { ???? ?????
 		for (int j1 = 0; j1 < vis_size; ++j1) {
 			if (vision[i1][j1] != NULL) 
 				std::cout << i1 << "\t" << j1 << std::endl;
@@ -141,8 +141,8 @@ void Scene::move_objects() {
 				if (field[i][j]->is_Alive) {
 					Object ***vision = get_vision(field[i][j]->get_range(), i ,j);
 					std::pair<int, int>coords = field[i][j]->move(field, max_x, max_y);
-					for(int i = 0; i < (field[i][j]->get_range())*2+1; ++i) {
-						delete [] vision[i];
+					for(int k = 0; k < (field[i][j]->get_range())*2+1 ; ++k) {
+						delete [] vision[k];
 					}
 					delete [] vision;
 					if (field[coords.first][coords.second] != NULL && !(coords.first == i && coords.second == j)) {

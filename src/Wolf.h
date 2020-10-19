@@ -5,6 +5,8 @@ class Wolf : public Alive{
 public:
 	Wolf(int my_x, int my_y);
 
+	~Wolf(){};
+
 	//int get_range();
 
 	void draw(sf::RenderWindow* window, int size) override;

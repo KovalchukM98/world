@@ -81,7 +81,7 @@ void Dog::draw(sf::RenderWindow* window, int size){
 	int start_x = size * x;
 	int start_y = size * y;
 	sf::Texture dog;
-	dog.loadFromFile("dog.png");
+	dog.loadFromFile("wolf_v2.png");
 	sf::Sprite dogsp;
 	dogsp.setTexture(dog);
 	dogsp.setPosition(start_x + size / 4, start_y + size / 4);

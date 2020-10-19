@@ -130,7 +130,7 @@ void Wolf::draw(sf::RenderWindow* window, int size){
 	int start_x = size * x;
 	int start_y = size * y;
 	sf::Texture wolf;
-	wolf.loadFromFile("wolf.png");
+	wolf.loadFromFile("wolf_v3.png");
 	sf::Sprite wolfsp;
 	wolfsp.setTexture(wolf);
 	wolfsp.setPosition(start_x+size/4, start_y+size/4);

@@ -17,7 +17,9 @@ public:
 	void give_turn(){
 		turn = true;
 	}
-	Object() {};
+	Object() {
+		range = 0;
+	};
 	~Object() {};
 	virtual void draw(sf::RenderWindow* window, int size) = 0;
 

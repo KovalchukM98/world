@@ -14,7 +14,7 @@ void Stone::draw(sf::RenderWindow* window, int size) {
 	int start_x = size * x;
 	int start_y = size * y;
 	sf::Texture stone;
-	stone.loadFromFile("stone.png");
+	stone.loadFromFile("stone_v1.png");
 	sf::Sprite stonesp;
 	stonesp.setTexture(stone);
 	stonesp.setPosition(start_x, start_y);
