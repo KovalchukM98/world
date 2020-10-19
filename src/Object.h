@@ -10,7 +10,9 @@
 
 class Object {
 public:
-	int get_range();
+	int get_range(){
+		return range;
+	}
 
 	void give_turn(){
 		turn = true;
