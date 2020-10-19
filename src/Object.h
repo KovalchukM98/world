@@ -17,7 +17,8 @@ public:
 	void give_turn(){
 		turn = true;
 	}
-
+	Object() {};
+	~Object() {};
 	virtual void draw(sf::RenderWindow* window, int size) = 0;
 
 	virtual std::pair<int,int> move(Object*** map ,int max_x, int max_y) = 0;

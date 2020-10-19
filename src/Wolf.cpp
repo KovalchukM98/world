@@ -20,9 +20,9 @@ Wolf::Wolf(int my_x, int my_y) : Alive() {
 	turn = true;
 }
 
-int Wolf::get_range(){
+/*int Wolf::get_range(){
 	return range;
-}
+}*/
 
 std::pair<int,int> Wolf::try_to_hunt(Object*** map , int max_x, int max_y){
 	std::pair<int,int> coords;

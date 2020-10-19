@@ -20,9 +20,9 @@ Dog::Dog(int my_x, int my_y) : Alive() {
 	turn = true;
 }
 
-int Dog::get_range(){
+/*int Dog::get_range(){
 	return range;
-}
+}*/
 
 std::pair<int,int> Dog::move(Object*** map , int max_x, int max_y){
 	std::pair<int,int> coords;

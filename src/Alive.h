@@ -7,7 +7,7 @@
 #include "Object.h"
 class Alive : public Object {
 public:
-
+	~Alive() {};
 	Alive(){
 		is_Alive = true;
 	}
