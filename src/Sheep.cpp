@@ -1,7 +1,7 @@
-#include "Dog.h"
+#include "Sheep.h"
 #include <utility>
 
-Dog::Dog(int my_x, int my_y) : Alive() {
+Sheep::Sheep(int my_x, int my_y) : Alive() {
 	x = my_x;
 	y = my_y;
 	range = 1;
@@ -20,11 +20,11 @@ Dog::Dog(int my_x, int my_y) : Alive() {
 	turn = true;
 }
 
-/*int Dog::get_range(){
+/*int Sheep::get_range(){
 	return range;
 }*/
 
-std::pair<int,int> Dog::move(Object*** map , int max_x, int max_y){
+std::pair<int,int> Sheep::move(Object*** map , int max_x, int max_y){
 	std::pair<int,int> coords;
 	coords.first = x;
 	coords.second = y;
@@ -76,14 +76,14 @@ std::pair<int,int> Dog::move(Object*** map , int max_x, int max_y){
 	return coords;
 }
 
-void Dog::draw(sf::RenderWindow* window, int size){
+void Sheep::draw(sf::RenderWindow* window, int size){
 
 	int start_x = size * x;
 	int start_y = size * y;
-	sf::Texture dog;
-	dog.loadFromFile("wolf_v2.png");
-	sf::Sprite dogsp;
-	dogsp.setTexture(dog);
-	dogsp.setPosition(start_x + size / 4, start_y + size / 4);
-	window->draw(dogsp);
+	sf::Texture Sheep;
+	Sheep.loadFromFile("wolf_v2.png");
+	sf::Sprite Sheepsp;
+	Sheepsp.setTexture(Sheep);
+	Sheepsp.setPosition(start_x + size / 4, start_y + size / 4);
+	window->draw(Sheepsp);
 }

@@ -8,10 +8,10 @@
 #include "Object.h"
 #include "Entity.h"
 #include "Alive.h"
-#include "Stone.cpp"
-#include "Dog.cpp"
-#include "Lake.cpp"
-#include "Wolf.cpp"
+#include "Stone.h"
+#include "Sheep.h"
+#include "Lake.h"
+#include "Wolf.h"
 
 
 const int WINDOW_SIZE_X = 1000;

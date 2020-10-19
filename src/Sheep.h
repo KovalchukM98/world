@@ -1,9 +1,9 @@
 #pragma once
 #include "Alive.h"
 
-class Dog : public Alive{
+class Sheep : public Alive{
 public:
-	Dog(int my_x, int my_y);
+	Sheep(int my_x, int my_y);
 
 	//int get_range();
 

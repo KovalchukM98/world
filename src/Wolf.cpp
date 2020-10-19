@@ -80,7 +80,6 @@ std::pair<int,int> Wolf::move(Object*** map , int max_x, int max_y){
 		return coords;
 	}
 	// std::cout << "hunt failed " << std::endl;
-
 	int new_x;
 	int new_y;
 	int repeat = 0;

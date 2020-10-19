@@ -225,7 +225,7 @@ void Scene::generate_field() {
 			}
 			else
 				if (rand() % 10 == 1) {
-					field[i][j] = new Dog(i, j);
+					field[i][j] = new Sheep(i, j);
 				}
 				else
 				{
