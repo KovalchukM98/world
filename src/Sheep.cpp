@@ -23,7 +23,7 @@ Sheep::Sheep(int my_x, int my_y) : Alive() {
 /*int Sheep::get_range(){
 	return range;
 }*/
-
+/* Сделать метод еды, если овца сожрала еду -- food_count-=1 */
 std::pair<int,int> Sheep::move(Object*** map , int max_x, int max_y){
 	std::pair<int,int> coords;
 	coords.first = x;

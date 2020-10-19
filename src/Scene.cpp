@@ -39,7 +39,7 @@ void Scene::start() {
 	while (window.isOpen())
 	{
 		move_objects();
-
+		Check_Food();
 		window.clear();
 
 		draw();
@@ -214,6 +214,7 @@ void Scene::check_key(sf::Event event) {
 void Scene::generate_field() {
 	bool wolf = false;
 	sheep_count = 0;
+	food_count = 0;
 	for (int i = 0; i < max_x; ++i) {
 		for (int j = 0; j < max_y; ++j) {
 			if (rand() % 10 == 2) {
@@ -243,11 +244,23 @@ void Scene::generate_field() {
 		for (int j = 0; j < max_y; ++j) {
 			if (rand() % sheep_count == 1) {
 				field[i][j] = new Food(i, j);
+				food_count++;
 			}
 		}
 	}
+	all_food = food_count;
 };
 
+void Scene::Check_Food(){
+	if (food_count < all_food)
+	{
+		int rand_y = rand() % max_y;
+		int rand_x = rand() % max_x;
+		if(rand_x == NULL && rand_y == NULL)
+		field[rand_x][rand_y] = new Food(rand_x, rand_y);
+	}
+
+}
 void Scene::clear(Object*** arr, int x, int y) {
 	for (int i = 0; i < x; ++i) {
 		for (int j = 0; j < y; ++j) {
