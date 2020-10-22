@@ -20,27 +20,22 @@ Sheep::Sheep(int my_x, int my_y) : Alive() {
 	turn = true;
 }
 
-/*int Sheep::get_range(){
-	return range;
-}*/
-
-std::pair<int,int> Sheep::move(Object*** map , int max_x, int max_y){
+std::pair<int,int> Sheep::default_move(Object*** vision , int max_x, int max_y){
 	std::pair<int,int> coords;
 	coords.first = x;
 	coords.second = y;
-	if(turn == false){
-		return coords;
-	}
 
+	int vis_size = range * 2 + 1;
+	int center = range;
 	int new_x;
 	int new_y;
 	int repeat = 0;
 
 	while(repeat < 2){
-		new_x = x + direction.first*range;
-		new_y = y + direction.second*range;
+		new_x = x + direction.first;
+		new_y = y + direction.second;
 		if(new_x >= 0 && new_x < max_x){
-			if(map[new_x][y] == NULL && horizontal == true){
+			if(vision[center+direction.first][center] == NULL && horizontal == true){
 				coords.first = new_x;
 				x = new_x;
 				turn = false;
@@ -56,7 +51,7 @@ std::pair<int,int> Sheep::move(Object*** map , int max_x, int max_y){
 			horizontal = false;
 		}
 		if(new_y >= 0 && new_y < max_y){
-			if(map[x][new_y] == NULL && horizontal == false){
+			if(vision[center][center+direction.second] == NULL && horizontal == false){
 				coords.second = new_y;
 				y = new_y;
 				turn = false;
@@ -73,6 +68,21 @@ std::pair<int,int> Sheep::move(Object*** map , int max_x, int max_y){
 		}
 		repeat++;
 	}
+	return coords;
+}
+
+std::pair<int,int> Sheep::move(Object*** vision , int max_x, int max_y){
+	std::pair<int,int> coords;
+	coords.first = x;
+	coords.second = y;
+	if(turn == false){
+		return coords;
+	}
+
+	//coords = search_food();
+	//если не найдено, то дефолтный мув
+	coords = default_move(vision, max_x, max_y);
+
 	return coords;
 }
 

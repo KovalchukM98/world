@@ -140,7 +140,7 @@ void Scene::move_objects() {
 			if (field[i][j] != NULL) {
 				if (field[i][j]->is_Alive) {
 					Object ***vision = get_vision(field[i][j]->get_range(), i ,j);
-					std::pair<int, int>coords = field[i][j]->move(field, max_x, max_y);
+					std::pair<int, int>coords = field[i][j]->move(vision, max_x, max_y);
 					for(int k = 0; k < (field[i][j]->get_range())*2+1 ; ++k) {
 						delete [] vision[k];
 					}
@@ -226,7 +226,8 @@ void Scene::generate_field() {
 			}
 			else
 				if (rand() % 10 == 1) {
-					field[i][j] = new Sheep(i, j); sheep_count++;
+					field[i][j] = new Sheep(i, j); 
+					sheep_count++;
 				}
 				else
 				{
@@ -239,13 +240,13 @@ void Scene::generate_field() {
 				}
 		}
 	}
-	for (int i = 0; i < max_x; ++i) {
-		for (int j = 0; j < max_y; ++j) {
-			if (rand() % sheep_count == 1) {
-				field[i][j] = new Food(i, j);
-			}
-		}
-	}
+	// for (int i = 0; i < max_x; ++i) {
+	// 	for (int j = 0; j < max_y; ++j) {
+	// 		if (rand() % sheep_count == 1) {
+	// 			field[i][j] = new Food(i, j);
+	// 		}
+	// 	}
+	// }
 };
 
 void Scene::clear(Object*** arr, int x, int y) {

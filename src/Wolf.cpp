@@ -24,34 +24,39 @@ Wolf::Wolf(int my_x, int my_y) : Alive() {
 	return range;
 }*/
 
-std::pair<int,int> Wolf::try_to_hunt(Object*** map , int max_x, int max_y){
+std::pair<int,int> Wolf::try_to_hunt(Object*** vision , int max_x, int max_y){
 	std::pair<int,int> coords;
 	coords.first = x;
 	coords.second = y;
 	hunt = false;
 
+	int vis_size = range * 2 + 1;
+	int center = range;
+
 	for(int i = -1; i < 2; ++i){
 		if( x+i < 0 || x+i >= max_x || x+i == x){
 			continue;
 		}
-		if(map[x+i][y] != NULL){
-			if(map[x+i][y]->is_Alive){
+		if(vision[center+i][center] != NULL){
+			if(vision[center+i][center]->is_Alive){
 				hunt = true;
 				coords.first = x+i;
 				coords.second = y;
+				return coords;
 			}
 		}
 	}
 
-	for(int i = -1; i < 2; ++i){
-		if( y+i < 0 || y+i >= max_y || y+i == y){
+	for(int j = -1; j < 2; ++j){
+		if( y+j < 0 || y+j >= max_y || y+j == y){
 			continue;
 		}
-		if(map[x][y+i] != NULL){
-			if(map[x][y+i]->is_Alive){	
+		if(vision[center][center+j] != NULL){
+			if(vision[center][center+j]->is_Alive){	
 				hunt = true;
 				coords.first = x;
-				coords.second = y+i;
+				coords.second = y+j;
+				return coords;
 			}
 		}
 	}
@@ -61,34 +66,22 @@ std::pair<int,int> Wolf::try_to_hunt(Object*** map , int max_x, int max_y){
 	return coords;
 }
 
-std::pair<int,int> Wolf::move(Object*** map , int max_x, int max_y){
+std::pair<int,int> Wolf::default_move(Object*** vision , int max_x, int max_y){
 	std::pair<int,int> coords;
 	coords.first = x;
 	coords.second = y;
-	if(turn == false){
-		return coords;
-	}
 
-	// std::cout << "try_to_hunt " << std::endl;
-	coords = try_to_hunt(map, max_x, max_y);
-	if(hunt){
-		turn = false;
-		hunt = false;
-		x = coords.first;
-		y = coords.second;
-		// std::cout<<"--------------------"<<std::endl;
-		return coords;
-	}
-	// std::cout << "hunt failed " << std::endl;
+	int vis_size = range * 2 + 1;
+	int center = range;
 	int new_x;
 	int new_y;
 	int repeat = 0;
 
 	while(repeat < 2){
-		new_x = x + direction.first*range;
-		new_y = y + direction.second*range;
+		new_x = x + direction.first;
+		new_y = y + direction.second;
 		if(new_x >= 0 && new_x < max_x){
-			if(map[new_x][y] == NULL && horizontal == true){
+			if(vision[center+direction.first][center] == NULL && horizontal == true){
 				coords.first = new_x;
 				x = new_x;
 				turn = false;
@@ -104,7 +97,7 @@ std::pair<int,int> Wolf::move(Object*** map , int max_x, int max_y){
 			horizontal = false;
 		}
 		if(new_y >= 0 && new_y < max_y){
-			if(map[x][new_y] == NULL && horizontal == false){
+			if(vision[center][center+direction.second] == NULL && horizontal == false){
 				coords.second = new_y;
 				y = new_y;
 				turn = false;
@@ -121,6 +114,31 @@ std::pair<int,int> Wolf::move(Object*** map , int max_x, int max_y){
 		}
 		repeat++;
 	}
+	return coords;
+}
+
+std::pair<int,int> Wolf::move(Object*** vision , int max_x, int max_y){
+	std::pair<int,int> coords;
+	coords.first = x;
+	coords.second = y;
+	if(turn == false){
+		return coords;
+	}
+
+	// std::cout << "try_to_hunt " << std::endl;
+	coords = try_to_hunt(vision, max_x, max_y);
+	if(hunt){
+		turn = false;
+		hunt = false;
+		x = coords.first;
+		y = coords.second;
+		// std::cout<<"--------------------"<<std::endl;
+		return coords;
+	}
+	// std::cout << "hunt failed " << std::endl;
+	
+	coords = default_move(vision, max_x, max_y);
+
 	return coords;
 }
 
