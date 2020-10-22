@@ -141,11 +141,19 @@ void Scene::move_objects() {
 				if (field[i][j]->is_Alive) {
 					Object ***vision = get_vision(field[i][j]->get_range(), i ,j);
 					std::pair<int, int>coords = field[i][j]->move(vision, max_x, max_y);
+					
 					for(int k = 0; k < (field[i][j]->get_range())*2+1 ; ++k) {
 						delete [] vision[k];
 					}
 					delete [] vision;
-					if (field[coords.first][coords.second] != NULL && !(coords.first == i && coords.second == j)) {
+					
+					std::cout << field[i][j]->is_dead() <<std::endl;
+					if (field[i][j]->is_dead() == true){
+						delete field[i][j];
+						//или лучше оставить голодный труп на пару тиков?
+						field[i][j] = NULL;
+					}
+					else if (field[coords.first][coords.second] != NULL && !(coords.first == i && coords.second == j)) {
 						make_fight(&field[i][j], &field[coords.first][coords.second]);
 					}
 					else {

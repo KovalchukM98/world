@@ -5,6 +5,8 @@ Sheep::Sheep(int my_x, int my_y) : Alive() {
 	x = my_x;
 	y = my_y;
 	range = 1;
+	max_hunger = 20;
+
 	if(rand()%2 == 0){
 		direction.first = 1;
 		horizontal = true;
@@ -79,8 +81,21 @@ std::pair<int,int> Sheep::move(Object*** vision , int max_x, int max_y){
 		return coords;
 	}
 
+	// потому что смертельно голодные не ходят
+	// if(hunger == max_hunger){
+	// 	dead == true;
+	// 	return coords;
+	// }
+
 	//coords = search_food();
-	//если не найдено, то дефолтный мув
+	// if(если еда найдена){
+	// 	turn = false;
+	// 	hunger = 0;
+	// 	x = coords.first;
+	// 	y = coords.second;
+	// 	return coords;
+	// }
+	//если не найдено, то дефолтный мув и hunger++;
 	coords = default_move(vision, max_x, max_y);
 
 	return coords;

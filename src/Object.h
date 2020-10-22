@@ -27,6 +27,10 @@ public:
 
 	bool is_Alive;
 
+	virtual bool is_dead(){
+		return false;
+	}
+
 protected:
 	bool turn;
 	int range;
