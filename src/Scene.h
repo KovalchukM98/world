@@ -32,10 +32,13 @@ private:
 	void check_key(sf::Event event);
 	void generate_field();
 	Object*** get_vision(int range, int x, int y);
+	void check_food();
 	void clear(Object*** arr, int x, int y);
 	int sheep_count;
 	int max_x;
 	int max_y;
+	int food_count;
+	int all_food;
 
 	Object*** field;
 	bool is_game_over;

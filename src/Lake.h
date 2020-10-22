@@ -8,6 +8,7 @@ public:
 	void draw(sf::RenderWindow* window, int size) override;
 
 	std::pair<int, int> move(Object*** map ,int max_x, int max_y) override;
+
 	
 protected:
 

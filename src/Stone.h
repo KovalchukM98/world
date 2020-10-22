@@ -1,9 +1,6 @@
 #pragma once
 #include "Entity.h"
 
-
-
-
 class Stone : public Entity {
 public:
 	Stone(int my_x, int my_y);

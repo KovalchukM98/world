@@ -6,6 +6,7 @@ Wolf::Wolf(int my_x, int my_y) : Alive() {
 	y = my_y;
 	range = 1;
 	max_hunger = 20;
+	name = "Wolf";
 
 	if(rand()%2 == 0){
 		direction.first = 1;

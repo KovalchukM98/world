@@ -3,7 +3,9 @@
 Food::Food(int my_x, int my_y) : Entity() {
 	x = my_x;
 	y = my_y;
+	name = "Food";
 }
+
 
 std::pair<int, int> Food::move(Object*** map, int max_x, int max_y) {
 	int a = 0, b = 0;

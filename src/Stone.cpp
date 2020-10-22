@@ -3,6 +3,7 @@
 Stone::Stone(int my_x, int my_y) : Entity() {
 	x = my_x;
 	y = my_y;
+	name = "Stone";
 }
 
 std::pair<int, int> Stone::move(Object*** map,int max_x, int max_y){

@@ -10,24 +10,28 @@
 
 class Object {
 public:
-	int get_range(){
+	int get_range() {
 		return range;
 	}
 
-	void give_turn(){
+	std::string get_name() {
+		return name;
+	}
+
+	void give_turn() {
 		turn = true;
 	}
-	Object() {
-		range = 0;
-	};
-	~Object() {};
+
+	Object() : range(0), name("Object") {}
+
+	~Object() {}
 	virtual void draw(sf::RenderWindow* window, int size) = 0;
 
-	virtual std::pair<int,int> move(Object*** map ,int max_x, int max_y) = 0;
+	virtual std::pair<int, int> move(Object*** map, int max_x, int max_y) = 0;
 
 	bool is_Alive;
 
-	virtual bool is_dead(){
+	virtual bool is_dead() {
 		return false;
 	}
 
@@ -37,4 +41,5 @@ protected:
 	int power;
 	int x;
 	int y;
+	std::string name;
 };

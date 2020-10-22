@@ -35,10 +35,11 @@ void Scene::start() {
 
 	float timer = 0;
 	float delay = 1.0f;
-	Object*** arr = get_vision(2, 10, 10);
 	while (window.isOpen())
 	{
 		move_objects();
+
+		check_food();
 
 		window.clear();
 
@@ -79,17 +80,9 @@ Object*** Scene::get_vision(int range, int x, int y) {
 			}
 			else {
 				vision[i1][j1] = field[i][j];
-				//std::cout << i1 << "\t" << j1 << std::endl;
 			}
 		}
 	}
-	/*for (int i1 = 0; i1 < vis_size; ++i1) { ???? ??????? ???
-		for (int j1 = 0; j1 < vis_size; ++j1) {
-			std::cout << vision[i1][j1] << std::endl;
-			std::cout << i1 << "\t" << j1 << std::endl;
-
-		}
-	}*/
 	int temp_left = range;
 	int temp_right = range + 1;
 	for (int i = 0; i < range; ++i) {
@@ -116,14 +109,6 @@ Object*** Scene::get_vision(int range, int x, int y) {
 		--temp_left;
 	}
 
-	/*for (int i1 = 0; i1 < vis_size; ++i1) { ???? ?????
-		for (int j1 = 0; j1 < vis_size; ++j1) {
-			if (vision[i1][j1] != NULL) 
-				std::cout << i1 << "\t" << j1 << std::endl;
-
-		}
-	}*/
-
 	return vision;
 }
 
@@ -139,16 +124,16 @@ void Scene::move_objects() {
 		for (int j = 0; j < max_y; ++j) {
 			if (field[i][j] != NULL) {
 				if (field[i][j]->is_Alive) {
-					Object ***vision = get_vision(field[i][j]->get_range(), i ,j);
+					Object*** vision = get_vision(field[i][j]->get_range(), i, j);
 					std::pair<int, int>coords = field[i][j]->move(vision, max_x, max_y);
-					
-					for(int k = 0; k < (field[i][j]->get_range())*2+1 ; ++k) {
-						delete [] vision[k];
+
+					for (int k = 0; k < (field[i][j]->get_range()) * 2 + 1; ++k) {
+						delete[] vision[k];
 					}
-					delete [] vision;
-					
-					std::cout << field[i][j]->is_dead() <<std::endl;
-					if (field[i][j]->is_dead() == true){
+					delete[] vision;
+
+					std::cout << field[i][j]->is_dead() << std::endl;
+					if (field[i][j]->is_dead() == true) {
 						delete field[i][j];
 						//или лучше оставить голодный труп на пару тиков?
 						field[i][j] = NULL;
@@ -222,6 +207,7 @@ void Scene::check_key(sf::Event event) {
 void Scene::generate_field() {
 	bool wolf = false;
 	sheep_count = 0;
+	food_count = 0;
 	for (int i = 0; i < max_x; ++i) {
 		for (int j = 0; j < max_y; ++j) {
 			if (rand() % 10 == 2) {
@@ -234,8 +220,7 @@ void Scene::generate_field() {
 			}
 			else
 				if (rand() % 10 == 1) {
-					field[i][j] = new Sheep(i, j); 
-					sheep_count++;
+					field[i][j] = new Sheep(i, j); sheep_count++;
 				}
 				else
 				{
@@ -248,14 +233,40 @@ void Scene::generate_field() {
 				}
 		}
 	}
-	// for (int i = 0; i < max_x; ++i) {
-	// 	for (int j = 0; j < max_y; ++j) {
-	// 		if (rand() % sheep_count == 1) {
-	// 			field[i][j] = new Food(i, j);
-	// 		}
-	// 	}
-	// }
+	for (int i = 0; i < max_x; ++i) {
+		for (int j = 0; j < max_y; ++j) {
+			if (rand() % sheep_count == 1) {
+				field[i][j] = new Food(i, j);
+				food_count++;
+			}
+		}
+	}
+	all_food = food_count;
 };
+
+void Scene::check_food() {
+	food_count = 0;
+	for (int i = 0; i < max_x; ++i) {
+		for (int j = 0; j < max_y; ++j) {
+			if (field[i][j] != NULL) {
+				if (field[i][j]->get_name() == "Food") ++food_count;
+			}
+		}
+	}
+	if (food_count < all_food)
+	{
+		for (int i = 0; i < max_x; ++i) {
+			for (int j = 0; j < max_y; ++j) {
+				if (rand() % sheep_count == 1 && field[i][j] == NULL) {
+					field[i][j] = new Food(i, j);
+					++food_count;
+				}
+				if (food_count == all_food) break;
+			}
+		}
+	}
+
+}
 
 void Scene::clear(Object*** arr, int x, int y) {
 	for (int i = 0; i < x; ++i) {
