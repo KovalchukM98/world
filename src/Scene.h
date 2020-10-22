@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -13,6 +14,7 @@
 #include "Lake.h"
 #include "Wolf.h"
 #include "Food.h"
+#include "Corpse.h"
 
 const int WINDOW_SIZE_X = 1000;
 const int WINDOW_SIZE_Y = 1000;
@@ -41,7 +43,10 @@ private:
 	int all_food;
 
 	Object*** field;
+	std::vector<Corpse> corpses;
+
 	bool is_game_over;
+
 	sf::Clock clock;
 	float timer;
 	sf::RenderWindow window;

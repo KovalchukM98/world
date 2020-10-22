@@ -11,6 +11,8 @@ public:
 	Alive(){
 		is_Alive = true;
 		dead = false;
+		hunger = 0;
+		max_hunger = 10;
 	}
 
 	void give_turn(){
