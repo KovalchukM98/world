@@ -212,6 +212,7 @@ void Scene::check_key(sf::Event event) {
 };
 
 void Scene::generate_field() {
+	srand(time(nullptr));
 	bool wolf = false;
 	sheep_count = 0;
 	food_count = 0;
