@@ -63,6 +63,49 @@ std::pair<int, int> Sheep::food_search(Object*** vision, int max_x, int max_y) {
 	return coords;
 }
 
+std::pair<int, int> Sheep::wolf_search(Object*** vision, int max_x, int max_y) {
+	std::pair<int, int> coords;
+	coords.first = x;
+	coords.second = y;
+	danger = false;
+
+	int vis_size = range * 2 + 1;
+	int center = range;
+
+	for (int i = -1; i < 2; ++i) {
+		if (x + i < 0 || x + i >= max_x || x + i == x || y + i < 0 || y + i >= max_y) {
+			continue;
+		}
+		if (vision[center + i][center] != NULL) {
+			if (vision[center + i][center]->get_name() == "Wolf" && vision[center + i][center]->is_dead() == false) {
+				danger = true;
+				if (vision[center][center + i] == NULL) {
+					coords.first = x;
+					coords.second = y + i;
+					return coords;
+				}
+			}
+		}
+	}
+
+	for (int j = -1; j < 2; ++j) {
+		if (y + j < 0 || y + j >= max_y || y + j == y || x + j < 0 || x + j >= max_x) {
+			continue;
+		}
+		if (vision[center][center + j] != NULL) {
+			if (vision[center][center + j]->get_name() == "Wolf" && vision[center][center + j]->is_dead() == false) {
+				danger = true;
+				if (vision[center + j][center] == NULL) {
+					coords.first = x + j;
+					coords.second = y;
+					return coords;
+				}
+			}
+		}
+	}
+	return coords;
+}
+
 std::pair<int, int> Sheep::default_move(Object*** vision, int max_x, int max_y) {
 	std::pair<int, int> coords;
 	coords.first = x;
@@ -128,7 +171,17 @@ std::pair<int, int> Sheep::move(Object*** vision, int max_x, int max_y) {
 	}
 
 	if (hunger == max_hunger) {
-		dead == true;
+		dead = true;
+		return coords;
+	}
+
+	coords = wolf_search(vision, max_x, max_y);
+	if (danger) {
+		turn = false;
+		danger = false;
+		x = coords.first;
+		y = coords.second;
+		++hunger;
 		return coords;
 	}
 
@@ -148,7 +201,6 @@ std::pair<int, int> Sheep::move(Object*** vision, int max_x, int max_y) {
 }
 
 void Sheep::draw(sf::RenderWindow* window, int size) {
-
 	int start_x = size * x;
 	int start_y = size * y;
 	sf::Texture Sheep;

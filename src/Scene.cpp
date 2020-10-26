@@ -134,7 +134,7 @@ void Scene::move_objects() {
 
 					if (field[i][j]->is_dead() == true) {
 						delete field[i][j];
-						corpses.push_back(Corpse(i,j));
+						corpses.push_back(Corpse(i, j));
 						//или лучше оставить голодный труп на пару тиков?
 						field[i][j] = NULL;
 					}
@@ -178,11 +178,11 @@ void Scene::draw() {
 		}
 	}
 
-	for(std::vector<Corpse>::iterator it = corpses.begin(); it != corpses.end();){
-		if((*it).is_rotten()){
+	for (std::vector<Corpse>::iterator it = corpses.begin(); it != corpses.end();) {
+		if ((*it).is_rotten()) {
 			corpses.erase(it);
 		}
-		else{
+		else {
 			(*it).draw(&window, size_x);
 			++it;
 		}
@@ -231,7 +231,6 @@ void Scene::generate_field() {
 			else
 				if (rand() % 10 == 1) {
 					field[i][j] = new Sheep(i, j); sheep_count++;
-					// field[i][j] = NULL;
 				}
 				else
 				{
@@ -244,15 +243,15 @@ void Scene::generate_field() {
 				}
 		}
 	}
-	// for (int i = 0; i < max_x; ++i) {
-	// 	for (int j = 0; j < max_y; ++j) {
-	// 		if (rand() % sheep_count == 1) {
-	// 			field[i][j] = new Food(i, j);
-	// 			food_count++;
-	// 		}
-	// 	}
-	// }
-	// all_food = food_count;
+	for (int i = 0; i < max_x; ++i) {
+		for (int j = 0; j < max_y; ++j) {
+			if (field[i][j] == NULL && rand() % 4 == 0) {
+				field[i][j] = new Food(i, j);
+				food_count++;
+			}
+		}
+	}
+	all_food = food_count;
 };
 
 void Scene::check_food() {

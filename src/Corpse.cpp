@@ -33,7 +33,7 @@ void Corpse::draw(sf::RenderWindow* window, int size) {
 	sf::Text text;
 	text.setString("Rip");
 	text.setCharacterSize(5);
-	text.setColor(sf::Color::Black);
+	//text.setColor(sf::Color::Black);
 	text.setPosition(start_x + (size/4) + 2, start_y + (size/2));
 	text.setFont(font);
 	text.setStyle(sf::Text::Bold);
