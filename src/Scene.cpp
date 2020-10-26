@@ -135,7 +135,6 @@ void Scene::move_objects() {
 					if (field[i][j]->is_dead() == true) {
 						delete field[i][j];
 						corpses.push_back(Corpse(i, j));
-						//или лучше оставить голодный труп на пару тиков?
 						field[i][j] = NULL;
 					}
 					else if (field[coords.first][coords.second] != NULL && !(coords.first == i && coords.second == j)) {

@@ -132,7 +132,6 @@ std::pair<int, int> Wolf::move(Object*** vision, int max_x, int max_y) {
 		return coords;
 	}
 
-	// std::cout << "try_to_hunt " << std::endl;
 	coords = try_to_hunt(vision, max_x, max_y);
 	if (hunt) {
 		turn = false;
@@ -140,12 +139,9 @@ std::pair<int, int> Wolf::move(Object*** vision, int max_x, int max_y) {
 		hunger = 0;
 		x = coords.first;
 		y = coords.second;
-		// std::cout<<"--------------------"<<std::endl;
 		return coords;
 	}
 	hunger++;
-	std::cout << "hunger = " << hunger << std::endl;
-	// std::cout << "hunt failed " << std::endl;
 
 	coords = default_move(vision, max_x, max_y);
 
