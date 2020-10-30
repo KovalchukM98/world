@@ -205,11 +205,7 @@ void Sheep::draw(sf::RenderWindow* window, int size) {
 	int start_x = size * x;
 	int start_y = size * y;
 	sf::Texture Sheep;
-<<<<<<< HEAD
 	Sheep.loadFromFile("sheep_v1.png");
-=======
-	Sheep.loadFromFile("wolf_v2.png");
->>>>>>> a279e9a699b7d1130f533c7d1e53c5617cb0fb0f
 	sf::Sprite Sheepsp;
 	Sheepsp.setTexture(Sheep);
 	Sheepsp.setPosition(start_x + size / 4, start_y + size / 4);
