@@ -16,7 +16,7 @@ void Food::draw(sf::RenderWindow* window, int size) {
 	int start_x = size * x;
 	int start_y = size * y;
 	sf::Texture food;
-	food.loadFromFile("food.png");
+	food.loadFromFile("food_v1.png");
 	sf::Sprite foodsp;
 	foodsp.setTexture(food);
 	foodsp.setPosition(start_x, start_y);

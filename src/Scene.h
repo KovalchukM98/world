@@ -41,9 +41,13 @@ private:
 	int max_y;
 	int food_count;
 	int all_food;
+	int step;
 
 	Object*** field;
 	std::vector<Corpse> corpses;
+	std::vector<Object*> hidden_food;
+
+
 
 	bool is_game_over;
 

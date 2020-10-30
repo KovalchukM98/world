@@ -15,6 +15,8 @@ Scene::Scene() {
 	for (int i = 0; i < max_x; ++i) {
 		field[i] = new Object * [max_y];
 	}
+	all_food = 80;
+	step = 0;
 };
 
 Scene::~Scene() {
@@ -126,16 +128,22 @@ void Scene::move_objects() {
 				if (field[i][j]->is_Alive) {
 					Object*** vision = get_vision(field[i][j]->get_range(), i, j);
 					std::pair<int, int>coords = field[i][j]->move(vision, max_x, max_y);
-
 					for (int k = 0; k < (field[i][j]->get_range()) * 2 + 1; ++k) {
 						delete[] vision[k];
 					}
 					delete[] vision;
 
+					if (field[coords.first][coords.second] != NULL) {
+						if (field[i][j]->get_name() == "Wolf" && field[coords.first][coords.second]->get_name() == "Food") {
+							++step;
+							hidden_food.push_back(field[coords.first][coords.second]);
+							field[coords.first][coords.second] = NULL;
+						}
+					}
+
 					if (field[i][j]->is_dead() == true) {
 						delete field[i][j];
 						corpses.push_back(Corpse(i, j));
-						//или лучше оставить голодный труп на пару тиков?
 						field[i][j] = NULL;
 					}
 					else if (field[coords.first][coords.second] != NULL && !(coords.first == i && coords.second == j)) {
@@ -164,6 +172,17 @@ void Scene::move_objects() {
 
 
 void Scene::draw() {
+	if (step > 0) {
+		for (int i = 0; i < step; ++i)
+		{
+			if (hidden_food[i] != NULL && field[hidden_food[i]->get_x()][hidden_food[i]->get_y()] == NULL) {
+				field[hidden_food[i]->get_x()][hidden_food[i]->get_y()] = hidden_food[i];
+				hidden_food[i] = NULL;
+			}
+		}
+
+	}
+
 	for (int i = 0; i < max_x; ++i) {
 		for (int j = 0; j < max_x; ++j) {
 			sf::Texture grass;
@@ -178,7 +197,17 @@ void Scene::draw() {
 		}
 	}
 
-	for (std::vector<Corpse>::iterator it = corpses.begin(); it != corpses.end();) {
+	for (int i = 0; i < corpses.size();)
+	{
+		if (corpses[i].is_rotten()) {
+			corpses.erase(corpses.begin() + i);
+		}
+		else {
+			corpses[i].draw(&window, size_x);
+			++i;
+		}
+	}
+	/*for (std::vector<Corpse>::iterator it = corpses.begin(); it != corpses.end();) {
 		if ((*it).is_rotten()) {
 			corpses.erase(it);
 		}
@@ -186,7 +215,8 @@ void Scene::draw() {
 			(*it).draw(&window, size_x);
 			++it;
 		}
-	}
+	}*/
+
 }
 
 void Scene::check_event() {
@@ -243,15 +273,16 @@ void Scene::generate_field() {
 				}
 		}
 	}
+
 	for (int i = 0; i < max_x; ++i) {
 		for (int j = 0; j < max_y; ++j) {
-			if (field[i][j] == NULL && rand() % 4 == 0) {
+			if (field[i][j] == NULL && rand() % 3 == 0) {
 				field[i][j] = new Food(i, j);
 				food_count++;
 			}
 		}
 	}
-	all_food = food_count;
+
 };
 
 void Scene::check_food() {

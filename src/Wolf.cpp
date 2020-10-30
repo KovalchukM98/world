@@ -39,7 +39,7 @@ std::pair<int, int> Wolf::try_to_hunt(Object*** vision, int max_x, int max_y) {
 			continue;
 		}
 		if (vision[center + i][center] != NULL) {
-			if (vision[center + i][center]->get_name() == "Sheep" && vision[center + i][center]->is_dead() == false) {
+			if (vision[center + i][center]->get_name() == "Sheep") {
 				hunt = true;
 				coords.first = x + i;
 				coords.second = y;
@@ -53,7 +53,7 @@ std::pair<int, int> Wolf::try_to_hunt(Object*** vision, int max_x, int max_y) {
 			continue;
 		}
 		if (vision[center][center + j] != NULL) {
-			if (vision[center][center + j]->get_name() == "Sheep" && vision[center][center + j]->is_dead() == false) {
+			if (vision[center][center + j]->get_name() == "Sheep") {
 				hunt = true;
 				coords.first = x;
 				coords.second = y + j;
@@ -79,7 +79,7 @@ std::pair<int, int> Wolf::default_move(Object*** vision, int max_x, int max_y) {
 		new_x = x + direction.first;
 		new_y = y + direction.second;
 		if (new_x >= 0 && new_x < max_x) {
-			if (vision[center + direction.first][center] == NULL && horizontal == true) {
+			if ((vision[center + direction.first][center] == NULL || vision[center + direction.first][center]->get_name() == "Food") && horizontal == true) {
 				coords.first = new_x;
 				x = new_x;
 				turn = false;
@@ -97,7 +97,7 @@ std::pair<int, int> Wolf::default_move(Object*** vision, int max_x, int max_y) {
 			horizontal = false;
 		}
 		if (new_y >= 0 && new_y < max_y) {
-			if (vision[center][center + direction.second] == NULL && horizontal == false) {
+			if ((vision[center][center + direction.second] == NULL || vision[center][center + direction.second]->get_name() == "Food") && horizontal == false) {
 				coords.second = new_y;
 				y = new_y;
 				turn = false;
@@ -132,7 +132,6 @@ std::pair<int, int> Wolf::move(Object*** vision, int max_x, int max_y) {
 		return coords;
 	}
 
-	// std::cout << "try_to_hunt " << std::endl;
 	coords = try_to_hunt(vision, max_x, max_y);
 	if (hunt) {
 		turn = false;
@@ -140,12 +139,9 @@ std::pair<int, int> Wolf::move(Object*** vision, int max_x, int max_y) {
 		hunger = 0;
 		x = coords.first;
 		y = coords.second;
-		// std::cout<<"--------------------"<<std::endl;
 		return coords;
 	}
 	hunger++;
-	std::cout << "hunger = " << hunger << std::endl;
-	// std::cout << "hunt failed " << std::endl;
 
 	coords = default_move(vision, max_x, max_y);
 

@@ -187,6 +187,7 @@ std::pair<int, int> Sheep::move(Object*** vision, int max_x, int max_y) {
 
 	coords = food_search(vision, max_x, max_y);
 	if (hungry) {
+		hunger = 0;
 		turn = false;
 		hungry = false;
 		x = coords.first;
@@ -204,7 +205,7 @@ void Sheep::draw(sf::RenderWindow* window, int size) {
 	int start_x = size * x;
 	int start_y = size * y;
 	sf::Texture Sheep;
-	Sheep.loadFromFile("sheep.png");
+	Sheep.loadFromFile("sheep_v1.png");
 	sf::Sprite Sheepsp;
 	Sheepsp.setTexture(Sheep);
 	Sheepsp.setPosition(start_x + size / 4, start_y + size / 4);
