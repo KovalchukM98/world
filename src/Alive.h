@@ -17,11 +17,15 @@ public:
 
 	void give_turn(){
 		turn = true;
-		hunger = 0;
 	}
 
 	bool is_dead(){
 		return dead;
+	}
+
+	bool feed(){
+		hunger = 0;
+		return true;
 	}
 
 protected:

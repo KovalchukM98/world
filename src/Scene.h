@@ -29,7 +29,7 @@ public:
 private:
 	void move_objects();
 	void draw();
-	void make_fight(Object** agressor, Object** defender);
+	bool action(Object** agressor, Object** defender);
 	void check_event();
 	void check_key(sf::Event event);
 	void generate_field();

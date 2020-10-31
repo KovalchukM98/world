@@ -146,7 +146,6 @@ std::pair<int, int> Wolf::move(Object*** vision, int max_x, int max_y) {
 	if (hunt) {
 		turn = false;
 		hunt = false;
-		hunger = 0;
 		x = coords.first;
 		y = coords.second;
 		return coords;

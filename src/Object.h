@@ -10,6 +10,10 @@
 
 class Object {
 public:
+	Object() : range(0), name("Object") {}
+
+	~Object() {}
+
 	int get_range() {
 		return range;
 	}
@@ -30,18 +34,19 @@ public:
 		return y;
 	}
 
-	Object() : range(0), name("Object") {}
+	virtual bool feed(){
+		return true;
+	};
 
-	~Object() {}
 	virtual void draw(sf::RenderWindow* window, int size) = 0;
 
 	virtual std::pair<int, int> move(Object*** map, int max_x, int max_y) = 0;
 
-	bool is_Alive;
-
 	virtual bool is_dead() {
 		return false;
 	}
+
+	bool is_Alive;
 
 protected:
 	bool turn;

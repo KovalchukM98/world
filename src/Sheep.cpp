@@ -187,7 +187,6 @@ std::pair<int, int> Sheep::move(Object*** vision, int max_x, int max_y) {
 
 	coords = food_search(vision, max_x, max_y);
 	if (hungry) {
-		hunger = 0;
 		turn = false;
 		hungry = false;
 		x = coords.first;

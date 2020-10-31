@@ -114,11 +114,37 @@ Object*** Scene::get_vision(int range, int x, int y) {
 	return vision;
 }
 
-void Scene::make_fight(Object** agressor, Object** defender) {
-
-	delete* defender;
-	*defender = *agressor;
-	*agressor = NULL;
+bool Scene::action(Object** agressor, Object** defender) {
+	if(*agressor == *defender){
+		return false;
+	}
+	if (*defender == NULL) {
+		*defender = *agressor;
+		*agressor = NULL;
+		return true;
+	}
+	else{
+		if((*agressor)->get_name() == "Wolf" && (*defender)->get_name() == "Food") {
+			hidden_food.push_back(*defender);
+			*defender = *agressor;
+			*agressor = NULL;
+			return true;
+		}
+		else if((*agressor)->get_name() == (*defender)->get_name()) {
+			Object* tmp = *agressor;
+			*agressor = *defender;
+			*defender = tmp;
+			return true;
+		}
+		else{
+			delete* defender;
+			(*agressor)->feed();
+			*defender = *agressor;
+			*agressor = NULL;
+			return true;
+		}
+	}
+	return false;
 }
 
 void Scene::move_objects() {
@@ -133,27 +159,12 @@ void Scene::move_objects() {
 					}
 					delete[] vision;
 
-					if (field[coords.first][coords.second] != NULL) {
-						if (field[i][j]->get_name() == "Wolf" && field[coords.first][coords.second]->get_name() == "Food") {
-							++step;
-							hidden_food.push_back(field[coords.first][coords.second]);
-							field[coords.first][coords.second] = NULL;
-						}
-					}
-
 					if (field[i][j]->is_dead() == true) {
 						delete field[i][j];
 						corpses.push_back(Corpse(i, j));
 						field[i][j] = NULL;
 					}
-					else if (field[coords.first][coords.second] != NULL && !(coords.first == i && coords.second == j)) {
-						make_fight(&field[i][j], &field[coords.first][coords.second]);
-					}
-					else {
-						Object* tmp = field[i][j];
-						field[i][j] = field[coords.first][coords.second];
-						field[coords.first][coords.second] = tmp;
-					}
+					action(&field[i][j], &field[coords.first][coords.second]);
 				}
 			}
 		}
@@ -172,15 +183,15 @@ void Scene::move_objects() {
 
 
 void Scene::draw() {
-	if (step > 0) {
-		for (int i = 0; i < step; ++i)
-		{
-			if (hidden_food[i] != NULL && field[hidden_food[i]->get_x()][hidden_food[i]->get_y()] == NULL) {
-				field[hidden_food[i]->get_x()][hidden_food[i]->get_y()] = hidden_food[i];
-				hidden_food[i] = NULL;
-			}
+	for (int i = 0; i < hidden_food.size();){
+		if(field[hidden_food[i]->get_x()][hidden_food[i]->get_y()] == NULL) {
+			field[hidden_food[i]->get_x()][hidden_food[i]->get_y()] = hidden_food[i];
+			hidden_food.erase(hidden_food.begin()+i);
 		}
-
+		else{
+			hidden_food[i]->draw(&window, size_x);
+			++i;
+		}
 	}
 
 	for (int i = 0; i < max_x; ++i) {
@@ -207,6 +218,7 @@ void Scene::draw() {
 			++i;
 		}
 	}
+
 	/*for (std::vector<Corpse>::iterator it = corpses.begin(); it != corpses.end();) {
 		if ((*it).is_rotten()) {
 			corpses.erase(it);
