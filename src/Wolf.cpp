@@ -75,7 +75,7 @@ std::pair<int, int> Wolf::default_move(Object*** vision, int max_x, int max_y) {
 	int new_y;
 	int repeat = 0;
 
-	while (repeat < 2) {
+	while (repeat < 10) {
 		new_x = x + direction.first;
 		new_y = y + direction.second;
 		if (new_x >= 0 && new_x < max_x) {
@@ -87,7 +87,12 @@ std::pair<int, int> Wolf::default_move(Object*** vision, int max_x, int max_y) {
 			}
 			else {
 				if (horizontal == true) {
-					direction.first *= -1;
+					if(rand() % 2 == 0){
+						direction.first = -1;
+					}
+					else{
+						direction.first = 1;
+					}
 					horizontal = false;
 				}
 			}
@@ -105,7 +110,12 @@ std::pair<int, int> Wolf::default_move(Object*** vision, int max_x, int max_y) {
 			}
 			else {
 				if (horizontal == false) {
-					direction.second *= -1;
+					if(rand() % 2 == 0){
+						direction.second = -1;
+					}
+					else{
+						direction.second = 1;
+					}
 					horizontal = true;
 				}
 			}
