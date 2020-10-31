@@ -18,6 +18,8 @@ public:
 	std::pair<int, int> wolf_search(Object*** vision, int max_x, int max_y);
 private:
 	std::pair<int,int> direction;
+	sf::RectangleShape bar;
+	void HealthBar();
 	bool horizontal;
 	bool hungry;
 	bool danger;

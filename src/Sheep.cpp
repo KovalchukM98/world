@@ -22,6 +22,7 @@ Sheep::Sheep(int my_x, int my_y) : Alive() {
 		direction.second = -1;
 	}
 	turn = true;
+
 }
 
 std::pair<int, int> Sheep::food_search(Object*** vision, int max_x, int max_y) {
@@ -199,6 +200,14 @@ std::pair<int, int> Sheep::move(Object*** vision, int max_x, int max_y) {
 
 	return coords;
 }
+
+void Sheep::HealthBar() {
+
+	bar.setFillColor(sf::Color(0, 0 , 0));
+	bar.setSize(sf::Vector2f(10, 10));
+	bar.setPosition(0,0);
+}
+
 
 void Sheep::draw(sf::RenderWindow* window, int size) {
 	int start_x = size * x;
